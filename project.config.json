@@ -1,0 +1,13 @@
+{
+  "description": "Spell group",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "wx0b88c628555e2d98",
+  "projectname": "wepygroup",
+  "miniprogramRoot": "./dist"
+}
