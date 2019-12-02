@@ -1,163 +1,203 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  page{
+    background: #E9F1EC;
+    position: relative;
+    .header{
+      height: 280rpx;
+      width: 130%;
+      background-image: linear-gradient(290deg, #93E0AB  0% ,#00A737  80%);
+      top: 0;
+      left: 50%;
+      margin-left: -65%;
+      border-bottom-left-radius: 45%;
+      border-bottom-right-radius: 45%;
+      position: absolute;
+      .logo{
+        width: 171rpx;
+        height: 171rpx;
+        position: absolute;
+        bottom: -85.5rpx;
+        left: -85.5rpx;
+        margin-left: 50%;
+        border-radius: 50%;
+      }
+    }
+    .desc{
+      /*border: 1px solid #A0C0AA;*/
+      background: #fff;
+      font-size: 28rpx;
+      margin: 210rpx 25rpx 0;
+      padding:190rpx 35rpx  54rpx 35rpx;
+      border-radius: 20rpx;
+      color: #404545;
+      box-shadow: 0 1px 8px 1px #A0C0AA
+    }
 
-  .userinfo-avatar {
-    width: 80rpx;
-    height: 80rpx;
-    border-radius: 50%;
-  }
+    .startBtn{
+      width: 86%;
+      background:#09BB07 ;
+      border-radius: 10rpx;
+      color: #fff;
+      margin-top: 55rpx;
+      font-size: 36rpx;
+      margin-bottom: 53rpx;
+    }
+    .navTo{
+      color: #576B95;
+      font-size: 28rpx;
+    }
+    .btm-desc{
+      position: fixed;
+      bottom: 28rpx;
+      font-size: 24rpx;
+      color: #929292;
+    }
 
-  .userinfo-nickname {
-    color: #aaa;
+  }
+  .cpm-con{
+    .bg{
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.5) ;
+    }
+    .cpm-info-con{
+      background: #fff;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      display: flex;
+      flex-direction: column;
+      padding: 36rpx;
+      .cpm-tit{
+        display: flex;
+        flex-direction: row;
+        color: #1E1E1E;
+        font-size: 28rpx;
+        align-items: center;
+        margin-bottom: 54rpx;
+        .img{
+          width: 46rpx;
+          height: 46rpx;
+          margin-right: 10rpx;
+        }
+      }
+      .invi{
+        color: #000000;
+        font-size: 30rpx;
+        margin-bottom: 64rpx;
+      }
+      .user-info{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .img-url{
+          width: 74rpx;
+          height: 74rpx;
+        }
+        .name-right{
+          flex: auto;
+          display: flex;
+          flex-direction: column;
+          margin-left: 15rpx;
+          .user-name{
+            font-size: 32rpx;
+            color: #0E0D0D;
+          }
+          .nickName{
+            font-size: 26rpx;
+            color: #AEAEAE;
+          }
+        }
+      }
+      .btn-con{
+        display: flex;
+        flex-direction: row;
+        margin-top: 60rpx;
+        button{
+          width: 35%;
+          line-height: 70rpx;
+          height: 70rpx;
+        }
+        .cancel{
+          background:#ECECEC ;
+          color:#1AAD19;
+          border: none;
+        }
+      }
+
+    }
   }
 </style>
 <template>
   <view class="container">
-    <view class="userinfo" @tap="handleViewTap">
-      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+    <view class="header">
+      <image class="logo" src="{{userInfo.avatarUrl}}"></image>
     </view>
+    <view class="desc">单个商品包装太大， 或者多件才能享受优惠。怎么办？发送到生活群，邀请朋友/邻居一起分单呗。</view>
+    <!--open-type="getUserInfo"  @tap="start"-->
+    <button class="startBtn" wx:if="{{!hasUserInfo }}"  open-type="getUserInfo"  bindgetuserinfo="userAllow">发起拼单</button>
+    <button class="startBtn" wx:if="{{hasUserInfo }}"  @tap="gotoStart">发起拼单</button>
+    <navigator class="navTo" url="/pages/myList">我发起/参与的拼单</navigator>
 
-    <panel>
-      <view class="title" slot="title">测试数据绑定</view>
+    <text class="btm-desc">- 一起拼单小程序版权所有 -</text>
 
-      <text class="info">{{normalTitle}}</text>
-      <text class="info">{{setTimeoutTitle}}</text>
-      <text class="info">{{mixin}}</text>
-      <text class="info">{{mynum}}</text>
-      <text class="info">{{now}}</text>
-      <button @tap="plus('a')" size="mini">  +  </button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">其它测试</view>
-      <button @tap="toast" size="mini">第三方组件</button>
-      <button @tap="communicate" size="mini">组件通信</button>
-      <button @tap="tap" size="mini">混合TAP事件</button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试并发网络请求</view>
-      <view>返回结果: <text>{{netrst}}</text></view>
-      <button @tap="request" size="mini"> 点我发起10个请求 </button>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试组件</view>
-
-      <text class="testcounter">计数组件1: </text>
-      <view class="counterview">
-        <counter1 @index-emit.user="counterEmit" />
+    <view class="cpm-con" wx:if="{{isUserShow}}">
+      <view class="bg" @tap="userCpmHide"></view>
+      <view class="userInfo-cpm-info cpm-info-con">
+        <view class="cpm-tit">
+          <image class="img" src="../static/logo.png"></image>
+          <text>一起PIN 申请</text>
+        </view>
+        <text class="invi">邀请朋友、朋友一起分单吧～</text>
+        <view class="user-info">
+          <view class="img-url">
+            <open-data type="userAvatarUrl"></open-data>
+          </view>
+          <view class="name-right">
+              <open-data type="userNickName" class="user-name"></open-data>
+              <text class="nickName">微信昵称</text>
+          </view>
+          <icon type="success_no_circle" size="20"/>
+        </view>
+        <view class="btn-con">
+          <button class="cancel" @tap="userCpmHide">取消</button>
+          <button type="primary" bindgetuserinfo="userAllow" open-type="getUserInfo">允许</button>
+        </view>
       </view>
-
-      <text class="testcounter">计数组件2: </text>
-
-      <view class="counterview">
-        <counter2 :num.sync="mynum"></counter2>
-      </view>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试组件Repeat</view>
-      <repeat for="" index="index" item="item" key="key">
-        <group :grouplist="item" :indexa="index"></group>
-      </repeat>
-    </panel>
-
-    <panel>
-      <view class="title" slot="title">测试列表</view>
-      <list></list>
-    </panel>
-
-    <toast />
+    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import Panel from '@/components/panel' // alias example
-  import Counter from 'counter' // alias example
-  import List from '../components/list' // aliasFields example
-  import moduleA from 'module-a' // aliasFields ignore module example
+  // import Panel from '@/components/panel' // alias example
   import Group from '../components/group'
   import Toast from 'wepy-com-toast'
-  import testMixin from '../mixins/test'
-
-  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
-
+  const app = wepy.$instance
+  const API = 'https://www.aganyun.com/pindan'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test'
+      navigationBarTitleText: '一起拼单'
     }
     components = {
-      panel: Panel,
-      counter1: Counter,
-      counter2: Counter,
-      list: List,
+      // panel: Panel,
       group: Group,
       toast: Toast
     }
-
-    mixins = [testMixin]
-
     data = {
-      mynum: 20,
+      hasUserInfo: false,
+      isUserShow: false,
+      openId: null,
       userInfo: {
-        nickName: '加载中...'
-      },
-      normalTitle: '原始标题',
-      setTimeoutTitle: '标题三秒后会被修改',
-      count: 0,
-      netrst: '',
-      groupList: [
-        {
-          id: 1,
-          name: '点击改变',
-          list: [
-            {
-              childid: '1.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '1.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: '点击改变',
-          list: [
-            {
-              childid: '2.1',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.2',
-              childname: '子项，点我改变'
-            }, {
-              childid: '2.3',
-              childname: '子项，点我改变'
-            }
-          ]
-        },
-        {
-          id: 3,
-          name: '点击改变',
-          list: [
-            {
-              childid: '3.1',
-              childname: '子项，点我改变'
-            }
-          ]
-        }
-      ]
+        nickName: '',
+        avatarUrl: '../static/logo.png'
+      }
     }
 
     computed = {
@@ -167,73 +207,149 @@
     }
 
     methods = {
-      plus () {
-        this.mynum++
-      },
-      toast () {
-        let promise = this.$invoke('toast', 'show', {
-          title: '自定义标题',
-          img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-        })
-
-        promise.then((d) => {
-          console.log('toast done')
-        })
-      },
-      tap () {
-        console.log('do noting from ' + this.$name)
-      },
-      communicate () {
-        console.log(this.$name + ' tap')
-
-        this.$invoke('counter2', 'minus', 45, 6)
-        this.$invoke('counter1', 'plus', 45, 6)
-
-        this.$broadcast('index-broadcast', 1, 3, 4)
-      },
-      request () {
+      start () {
         let self = this
-        let i = 10
-        let map = ['MA==', 'MQo=', 'Mg==', 'Mw==', 'NA==', 'NQ==', 'Ng==', 'Nw==', 'OA==', 'OQ==']
-        while (i--) {
-          wepy.request({
-            url: 'https://www.madcoder.cn/tests/sleep.php?time=1&t=css&c=' + map[i] + '&i=' + i,
-            success: function (d) {
-              self.netrst += d.data + '.'
-              self.$apply()
+        wx.checkSession({
+          success () {
+            if (!self.hasUserInfo && !self.openId) {
+              self.userCpmshow()
+            } else {
+              wx.navigateTo({
+                url: 'start',
+                success: function(res) {
+                  console.log(res)
+                }
+              })
             }
-          })
-        }
-      },
-      counterEmit (...args) {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
+          },
+          fail (res) {
+            console.log(res)
+            self.getLogin()
+          }
+        })
       }
+    }
+    gotoStart() {
+      wx.navigateTo({
+        url: 'start',
+        success: function(res) {
+          console.log(res)
+        }
+      })
+    }
+    // userCpmshow() {
+    //   this.isUserShow = true
+    //   this.$apply()
+    // }
+    // userCpmHide() {
+    //   this.isUserShow = false
+    //   this.$apply()
+    // }
+
+    userAllow() {
+      this.isUserShow = false
+      let self = this
+      wx.getSetting({
+        success(res) {
+          console.log(res)
+          if (!res.authSetting['scope.userInfo']) {
+            wx.authorize({
+              scope: 'scope.userInfo',
+              success () {
+                self.getLogin()
+              },
+              fail(res) {
+                console.log(res)
+              }
+            })
+          } else {
+            self.getLogin()
+          }
+        }
+      })
+      // this.$apply()
+    }
+    getLogin() {
+      let self = this
+      let userInfo = {}
+      wx.login({
+        success (res) {
+          let code = res.code
+          self.$parent.getUserInfo(function (ress) {
+            userInfo = ress.userInfo
+            if (userInfo) {
+              self.userInfo = userInfo
+              self.hasUserInfo = true
+              app.globalData.userInfo = userInfo
+              let string = ress.encryptedData
+              let iv = ress.iv
+              wx.setStorage({
+                key:"userInfo",
+                data:userInfo
+              })
+              // return
+              wx.request({
+                url: API + '/v1/wx/openid-info',
+                data: {
+                  code: code,
+                  encryptedData: string,
+                  iv: iv
+                },
+                method: 'POST',
+                header: {
+                  'content-type': 'application/json'
+                },
+                success: function(resss) {
+                  console.log(resss)
+                  self.openId = resss.data.data.openId
+                  wx.setStorage({
+                    key:"openId",
+                    data:resss.data.data.openId
+                  })
+                }
+              })
+            }else{
+              console.log('none')
+            }
+            self.$apply()
+          })
+        },
+        fail(res){
+          console.log('res',res)
+        }
+      })
     }
 
-    events = {
-      'index-emit': (...args) => {
-        let $event = args[args.length - 1]
-        console.log(`${this.$name} receive ${$event.name} from ${$event.source.$name}`)
-      }
-    }
+    events = {}
 
     onLoad() {
       let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
-        }
-        self.normalTitle = '标题已被修改'
+      self.$apply()
 
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
+      if (app.globalData && app.globalData.userInfo) {
+        console.log('hasUserInfo')
+        self.userInfo.nickName = app.globalData.userInfo.nickName || ''
+        self.userInfo.avatarUrl = app.globalData.userInfo.avatarUrl || '../static/logo.png'
+        self.hasUserInfo = true
+      }else{
+        this.$parent.getUserInfo(function (res) {
+          let userInfo = res.userInfo
+          if (userInfo) {
+            self.userInfo = userInfo
+            self.hasUserInfo = true
+            app.globalData.userInfo = userInfo
+          }
           self.$apply()
-        }, 3000)
-
-        self.$apply()
-      })
+        })
+      }
+      // try {
+      //   var value = wx.getStorageSync('openId')
+      //   if (value) {
+      //
+      //   }
+      // } catch (e) {
+      //   // Do something when catch error
+      // }
     }
   }
 </script>

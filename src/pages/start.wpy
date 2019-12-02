@@ -1,0 +1,564 @@
+<style lang="less">
+  page{
+    background: #E9F1EC;
+    position: relative;
+    .header{
+      height: 280rpx;
+      width: 130%;
+      background-image: linear-gradient(290deg, #93E0AB  0% ,#00A737  80%);
+      top: 0;
+      left: 50%;
+      margin-left: -65%;
+      border-bottom-left-radius: 45%;
+      border-bottom-right-radius: 45%;
+      position: absolute;
+      .header-msg{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        bottom:30rpx ;
+        .logo{
+          width: 104rpx;
+          height: 104rpx;
+          border-radius: 50%;
+          margin-bottom: 10rpx;
+        }
+        .tit{
+          color: #fff;
+          font-size: 28rpx;
+        }
+      }
+
+    }
+    .msg-con{
+      /*border: 1px solid #A0C0AA;*/
+      background: #fff;
+      font-size: 28rpx;
+      margin: 210rpx 0 0;
+      padding:76rpx 35rpx  0 35rpx;
+      box-sizing: border-box;
+      /*border-radius: 20rpx;*/
+      /*color: #404545;*/
+      box-shadow: 0 1px 8px 1px #A0C0AA;
+      width: 100%;
+      .list{
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid #EBEBEB;
+        padding: 35rpx 0 ;
+        /*height: 99rpx;*/
+        /*line-height: 99rpx;*/
+        .left-tit{
+          color: #131415;
+          font-size: 28rpx;
+        }
+        .list-right{
+          padding-left: 40rpx;
+          flex: auto;
+          input{
+            height: 100%;
+          }
+          textarea{
+            width: auto;
+            height: 120rpx;
+            /*padding-top: 32rpx;*/
+          }
+
+
+        }
+      }
+      .noBorder{
+        border: none;
+      }
+    }
+
+    .list-bet{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .list-right{
+        text-align: right;
+        color: #A0C0AA;
+
+
+      }
+      .btn-con{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        background:#9FA3A3;
+        border-radius: 48rpx 4rpx 48rpx 4rpx;
+        /*border-bottom-right-radius: 48rpx;*/
+        .btn{
+          /*background:#9FA3A3;*/
+          color: #fff;
+          padding:14rpx 28rpx;
+
+        }
+        .active{
+          background: #57BF6A;
+          /*padding:14rpx 34rpx;*/
+          border-radius: 48rpx 4rpx 48rpx 4rpx;
+        }
+      }
+    }
+
+    .startBtn{
+      width: 86%;
+      background:#09BB07 ;
+      border-radius: 10rpx;
+      color: #fff;
+      margin-top: 55rpx;
+      font-size: 36rpx;
+      margin-bottom: 53rpx;
+    }
+
+    .btm-desc{
+      position: fixed;
+      bottom: 28rpx;
+      font-size: 24rpx;
+      color: #929292;
+    }
+    .btn-left{
+      display: flex;
+      input{
+        width: 38rpx;
+      }
+    }
+
+  }
+  .errShow{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background: #888888;
+    color: #fff;
+    height: 70rpx;
+    line-height: 70rpx;
+    z-index: 1;
+    text-align: center;
+    font-size: 26rpx;
+  }
+
+
+  .shade-view {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.8);
+    opacity: 0.5;
+    overflow: hidden;
+  }
+  .share-content-view {
+    width: 100%;
+    left: 0;
+    height: 404rpx;
+    z-index: 2;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0px;
+    background-color: white;
+    border-top-left-radius: 36rpx;
+    border-top-right-radius: 36rpx;
+  }
+  .share-content-title {
+    font-size: 34rpx;
+    text-align: center;
+    padding-top:70rpx ;
+    width: 100%;
+    background-color: white;
+  }
+  .share-action-view {
+    display: flex;
+    height: 202rpx;
+    width: 100%;
+    background-color: white;
+    margin-top: 40rpx;
+
+  }
+  .share-button-view {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    &::after{
+      border: none;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="errShow" wx:if="{{errShow}}">{{errMsg}}</view>
+    <view class="header">
+      <view class="header-msg">
+        <image class="logo" src="{{userInfo.avatarUrl}}"></image>
+        <text class="tit">叫上小伙伴一起来PIN吧</text>
+      </view>
+    </view>
+    <view class="msg-con">
+      <view class="list">
+        <view class="left-tit">
+          拼单主体
+        </view>
+        <view class="list-right">
+          <input bindinput="formInputName" data-field="pinName" value="{{pinName}}" type="text" placeholder="输入商品来源" >
+        </view>
+      </view>
+
+      <view class="list">
+        <view class="left-tit">
+          拼单描述
+        </view>
+        <view class="list-right">
+          <textarea bindinput="formInputDesc"  data-field="description" value="{{description}}" name="" id="" cols="30" rows="10" placeholder="请输入拼单链接，描述拼单优惠"></textarea>
+        </view>
+      </view>
+
+      <view class="list">
+        <view class="left-tit">
+          商品链接
+        </view>
+        <view class="list-right">
+          <input value="{{productUrl}}"  bindinput="formInputUrl"  data-field="productUrl"  type="text" placeholder="请输入购买网址（选填）">
+        </view>
+      </view>
+
+      <view class="list">
+        <view class="left-tit">
+          商品单价
+        </view>
+        <view class="list-right">
+          <input type="text" placeholder="请输入价格"   bindinput="formInputPrice"  data-field="price"  value="{{price}}">
+        </view>
+      </view>
+
+      <view class="list list-bet">
+        <view class="left-tit">
+          拼单最小单位
+        </view>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="picker">
+            {{array[index]}}  >
+          </view>
+        </picker>
+      </view>
+
+      <view class="list noBorder list-bet">
+        <view class="left-tit">
+          拼单完成方式
+        </view>
+        <view class="btn-con">
+          <view class="{{btntype==0?'btn-left btn active':'btn-left btn'}}" @tap="changeType(0)" data-type="1">手动</view>
+          <view class="{{btntype==1?'btn-left btn active':'btn-left btn'}}"  @tap="changeType(1)"   data-type="2"><input
+            type="text" value="{{count}}" bindinput="formInputCount"  data-field="count"   wx:if="{{btntype==1}}">{{btntype==1?'个':'数量'}}</view>
+        </view>
+
+      </view>
+
+    </view>
+
+    <button class="startBtn"  @tap="startBtn">{{detailId?'确定拼单信息':'发起拼单'}}</button>
+
+    <view wx:if="{{isshowShade}}">
+      <view class="shade-view" bindtap="closeShade"/>
+      <view class="share-content-view">
+        <view class="share-action-view">
+          <button class="share-button-view" open-type="share">
+            <image style="width:44px; height: 44px" src="../static/wechart.png"/>
+            <text style="color:#6a6a6a; font-size: 12px;">分享给好友</text>
+          </button>
+        </view>
+        <view class="share-content-title" style="color: #6D6D6D;" bindtap="closeShade">取消</view>
+      </view>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import Group from '../components/group'
+  import Toast from 'wepy-com-toast'
+  const app = wepy.$instance
+  const API = 'https://www.aganyun.com/pindan'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '一起拼单'
+    }
+    components = {
+      panel: Panel,
+      group: Group,
+      toast: Toast
+    }
+    data = {
+      array: ['1', '1/2', '1/3'],
+      indexArr: null,
+      errMsg: '',
+      errShow: false,
+      userInfo: {
+        nickName: '加载中...'
+      },
+      btntype: 0,
+      hasUserInfo: false,
+      pinName: '', // 拼单主体
+      description: '', // 描述
+      productUrl: '', // 商品链接
+      price: null,  // 价格
+      minUnit: null, // 最小单位
+      style: 0,  // 拼单方式 0手动，1数量
+      count: null,
+      detailId: null,
+      isshowShade: false,
+      detailInfo: null,
+      reStart: false
+    }
+
+    computed = {
+      now () {}
+    }
+
+    methods = {
+      bindPickerChange: function(e) {
+        this.setData({
+          index: e.detail.value
+        })
+        this.indexArr = e.detail.value
+      },
+      changeType: function(type) {
+        // console.log(type)
+        this.btntype = parseInt(type)
+        if (type == 1) {
+          this.count = 2
+        }
+      },
+      // formInput(e) {
+      //   console.log(e.currentTarget.dataset.field)
+      //   console.log(e.detail.value)
+      //   this.pinName = e.detail.value
+      //   this.setData({
+      //     [e.currentTarget.dataset.field]:e.detail.value
+      //   })
+      //   this.$apply()
+      // },
+      formInputName(e) {
+        this.pinName = e.detail.value
+        this.$apply()
+      },
+      formInputDesc(e) {
+        this.description = e.detail.value
+        this.$apply()
+      },
+      formInputUrl(e) {
+        this.productUrl = e.detail.value
+        this.$apply()
+      },
+      formInputPrice(e) {
+        this.price = e.detail.value
+        this.$apply()
+      },
+      formInputCount(e) {
+        this.count = e.detail.value
+        this.$apply()
+      }
+    }
+    // formInputName(e) {
+    //     console.log(e.currentTarget.dataset.field)
+    //     console.log(e.detail.value)
+    //     this.pinName = e.detail.value
+    //     this.setData({
+    //       [e.currentTarget.dataset.field]:e.detail.value
+    //     })
+    //     this.$apply()
+    //   }
+    // }
+    showError(msg) {
+      this.errMsg = msg
+      this.errShow = true
+      let self = this
+      setTimeout(function() {
+        self.errShow = false
+        self.$apply()
+      }, 2000)
+    }
+    // 验证表单
+    validateForm() {
+      if (!this.pinName) {
+        this.showError('请填写拼单主体')
+        return false
+      }
+
+      if (!this.description) {
+        this.showError('请填写拼单描述')
+        return false
+      }
+
+      if (!this.price) {
+        this.showError('请填写商品价格')
+        return false
+      }
+      var regPos = /^\d+(\.\d+)?$/  // 非负浮点数
+      if (this.price && !regPos.test(this.price)) {
+        this.showError('请填写正确的商品价格')
+        return false
+      }
+      if (!this.indexArr) {
+        this.showError('请选择最小单位')
+        return false
+      }
+      return true
+    }
+    startBtn() {
+      // 验证表单
+      let self = this
+      if (this.validateForm()) {
+        let params = {
+          name: this.pinName, // 拼单主体
+          description: this.description, // 描述
+          productUrl: this.productUrl, // 商品链接
+          price: Number(this.price),  // 价格
+          minUnit: this.array[this.indexArr], // 最小单位
+          style: this.btntype,  // 拼单方式
+          count: this.count || 0// 数量
+        }
+        // if (params.style == 1) {
+        //   params.count = this.count
+        // }
+        // self.showShadeFn()
+        // return
+        let url = API + '/v1/pin/info'
+        let method = 'POST'
+        if (self.detailId && !self.reStart) {
+          method = 'PUT'
+          params.id = self.detailId
+          params.join = 0
+        }
+        wx.request({
+          url: url,
+          data: params,
+          method: method,
+          header: {
+            'content-type': 'application/json',
+            'openId': self.openId
+          },
+          success: function(res) {
+            self.showShadeFn()
+            wx.showToast({
+              title: '发布成功,分享给好友',
+              icon: 'none',
+              success: () => {
+                setTimeout(() => {
+                  self.detailId = null
+                  self.initDetail()
+                  self.$apply()
+                }, 1500)
+              }
+            })
+          }
+        })
+        this.$apply()
+      }
+    }
+    closeShade() {
+      this.isshowShade = false
+      this.$apply()
+    }
+
+    showShadeFn() {
+      this.isshowShade = true
+      this.$apply()
+    }
+
+    /**
+     * 用户分享
+     */
+    onShareAppMessage() {
+      this.isshowShade = false
+      this.$apply()
+      return {
+        title: '全民疯砍',
+        path: `/pages/detail?id=` + 3
+      }
+    }
+    initDetail() {
+      let self = this
+      let params = {
+        id: self.detailId
+      }
+      wx.request({
+        url: API + '/v1/pin/info',
+        data: params,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json',
+          'openId': self.openId
+        },
+        success: function(res) {
+          console.log(res)
+          let detailInfo = res.data.data
+          self.pinName = detailInfo.name
+          self.description = detailInfo.description
+          self.price = detailInfo.price
+          self.productUrl = detailInfo.productUrl
+          self.btntype = detailInfo.restCount ? 1 : 0
+          self.count = detailInfo.restCount ? detailInfo.restCount : null
+          let indexArr = self.array.indexOf(detailInfo.minUnit)
+          self.indexArr = indexArr
+          self.detailInfo = detailInfo
+          self.setData({index: indexArr})
+          self.$apply()
+        }
+      })
+    }
+    events = {}
+    // 页面加载完成时调用，一个页面只会调用一次。
+    onLoad(options) {
+      let self = this
+      if (options.id) {
+        this.detailId = options.id
+        self.$apply()
+      }
+      if (options.reStart) {
+        this.reStart = true
+      }
+      if (app.globalData && app.globalData.userInfo) {
+        console.log('hasUserInfo')
+        self.userInfo.nickName = app.globalData.userInfo.nickName || ''
+        self.userInfo.avatarUrl = app.globalData.userInfo.avatarUrl || '../static/logo.png'
+        self.hasUserInfo = true
+      } else {
+        this.$parent.getUserInfo(function (ress) {
+          if (ress.userInfo) {
+            self.userInfo = ress.userInfo
+            self.hasUserInfo = true
+          }
+          self.$apply()
+        })
+      }
+      try {
+        var openId = wx.getStorageSync('openId')
+        if (openId) {
+          this.openId = openId
+        }
+      } catch (e) {
+        // Do something when catch error
+      }
+    }
+    onShow() {
+      if (this.detailId) {
+        this.initDetail()
+      }
+    }
+  }
+</script>

@@ -13,11 +13,16 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
 
-
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/start',
+      'pages/test',
+      'pages/detail',
+      'pages/detailMine',
+      'pages/myList',
+      'pages/myIndex'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -56,12 +61,14 @@ export default class extends wepy.app {
   getUserInfo(cb) {
     const that = this
     if (this.globalData.userInfo) {
+      console.log('ii')
       return this.globalData.userInfo
     }
     wepy.getUserInfo({
+      withCredentials: true,
       success (res) {
         that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
+        cb && cb(res)
       }
     })
   }

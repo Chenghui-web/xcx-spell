@@ -1,0 +1,201 @@
+<style lang="less">
+  page{
+    background: #E9F1EC;
+    .list-con{
+      background: #fff;
+      width: 100%;
+      .list-alone{
+        display: flex;
+        flex-direction: row;
+        margin:0 36rpx;
+        padding: 36rpx 0;
+        border-bottom: 1px solid #EBEBEB;
+        .alone-left{
+          width: 200rpx;
+          height: 200rpx;
+          flex-shrink: 0;
+          margin-right: 52rpx;
+        }
+        .alone-right{
+          flex: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .alone-ri-top{
+            .tit{
+              color:#373737;
+              font-size: 28rpx;
+              overflow:hidden;
+              text-overflow:ellipsis;
+              display:-webkit-box;
+              -webkit-box-orient:vertical;
+              -webkit-line-clamp:2;
+            }
+            .desc{
+              color: #999999;
+              font-size: 24rpx;
+              margin-top: 12rpx;
+            }
+          }
+          .alone-ri-btm{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .btn-left{
+              font-size: 24rpx;
+              color: #383838;
+              .red{
+                color: #FF1B00;
+                font-size: 42rpx;
+              }
+            }
+            .btn-ri{
+              color: #fff;
+              background: #1AAD19;
+              width: 154rpx;
+              height: 48rpx;
+              font-size: 24rpx;
+              line-height: 48rpx;
+              border-radius: 14rpx;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="list-con">
+      <!--<view class="list-alone">-->
+        <!--<image class="alone-left" src="../static/logo.png"></image>-->
+        <!--<view class="alone-right">-->
+          <!--<view class="alone-ri-top">-->
+            <!--<view class="tit">京东维达手纸第二箱半价，拼团团购，一起享受优惠吧第二箱半价，拼团团购，一起享受优惠吧第二箱半价，拼团团购，一起享受优惠吧</view>-->
+            <!--<view class="desc">此拼单凑齐2个单位结束</view>-->
+          <!--</view>-->
+          <!--<view class="alone-ri-btm">-->
+            <!--<view class="btn-left">-->
+              <!--原价 <text class="red">¥75</text>-->
+            <!--</view>-->
+            <!--<navigator class="btn-ri" url="/pages/start?id=navigate">-->
+              <!--编辑信息-->
+            <!--</navigator>-->
+          <!--</view>-->
+        <!--</view>-->
+      <!--</view>-->
+
+      <!--<view class="list-alone">-->
+        <!--<image class="alone-left" src="../static/logo.png"></image>-->
+        <!--<view class="alone-right">-->
+          <!--<view class="alone-ri-top">-->
+            <!--<view class="tit">京东维达手纸第二箱半价，拼团团购，一起享受优惠吧第二箱半价，拼团团购，一起享受优惠吧第二箱半价，拼团团购，一起享受优惠吧</view>-->
+            <!--<view class="desc">此拼单凑齐2个单位结束</view>-->
+          <!--</view>-->
+          <!--<view class="alone-ri-btm">-->
+            <!--<view class="btn-left">-->
+              <!--原价 <text class="red">¥75</text>-->
+            <!--</view>-->
+            <!--<view class="btn-ri">-->
+              <!--编辑-->
+            <!--</view>-->
+          <!--</view>-->
+        <!--</view>-->
+      <!--</view>-->
+
+      <repeat for="{{list}}" key="index" index="index" item="item">
+        <view class="list-alone">
+          <image class="alone-left" src="{{item.headImg}}"></image>
+          <view class="alone-right">
+            <view class="alone-ri-top">
+              <view class="tit">{{item.productName}}</view>
+              <view class="desc">{{item.productDesc}}</view>
+            </view>
+            <view class="alone-ri-btm">
+              <view class="btn-left">
+                原价 <text class="red">¥{{item.price}}</text>
+              </view>
+              <navigator class="btn-ri" wx:if="{{item.actionStatus ==0 ||item.actionStatus ==2 }}" url='/pages/start?id={{item.id}}'>编辑信息</navigator>
+              <view class="btn-ri" wx:if="{{item.actionStatus ==1 ||item.actionStatus ==2}}" >
+                结束拼单
+              </view>
+            </view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import Group from '../components/group'
+  import Toast from 'wepy-com-toast'
+  const app = wepy.$instance
+  const API = 'https://www.aganyun.com/pindan'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '发起拼单'
+    }
+    components = {
+      panel: Panel,
+      group: Group,
+      toast: Toast
+    }
+    data = {
+      list: [],
+      limit: 10,
+      totalPage: null,
+      count: null,
+      page: 1,
+      openId: null
+    }
+
+    computed = {}
+    initList() {
+      let self = this
+      let params = {
+        page: self.page,
+        limit: self.limit
+      }
+      wx.request({
+        url: API + '/v1/pin/info-list',
+        data: params,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json',
+          'openId': self.openId
+        },
+        success: function(res) {
+          console.log(res)
+          self.list = res.data.data.list
+          self.count = res.data.data.count
+          self.totalPage = res.data.data.totalPage
+          self.$apply()
+        }
+      })
+
+    }
+    methods = {}
+    events = {}
+    // 页面加载完成时调用，一个页面只会调用一次。
+    onLoad() {
+      try {
+        var openId = wx.getStorageSync('openId')
+        if (openId) {
+          this.openId = openId
+          this.$apply()
+        }
+      } catch (e) {
+        // Do something when catch error
+      }
+    }
+    onShow() {
+      this.initList()
+    }
+  }
+</script>

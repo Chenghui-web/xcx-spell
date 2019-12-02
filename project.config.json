@@ -1,13 +1,105 @@
 {
-  "description": "Spell group",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram",
-  "appid": "wx0b88c628555e2d98",
-  "projectname": "wepygroup",
-  "miniprogramRoot": "./dist"
+	"description": "A WePY project",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false
+	},
+	"compileType": "miniprogram",
+	"appid": "wx0b88c628555e2d98",
+	"projectname": "group",
+	"miniprogramRoot": "dist/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"libVersion": "2.9.4",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/myIndex",
+					"pathName": "pages/myIndex",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/index",
+					"pathName": "pages/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/test",
+					"pathName": "pages/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/start",
+					"pathName": "pages/start",
+					"query": "id=3",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/myIndex",
+					"pathName": "pages/myIndex",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/test",
+					"pathName": "pages/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "pages/detail",
+					"pathName": "pages/detail",
+					"query": "id=21",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/myList",
+					"pathName": "pages/myList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/detailMine",
+					"pathName": "pages/detailMine",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }

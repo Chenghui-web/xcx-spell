@@ -1,0 +1,92 @@
+<style lang="less">
+  .header{
+    height: 400rpx;
+    width: 100%;
+    background-image: linear-gradient(290deg, #93E0AB  0% ,#00A737  80%);
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="header">
+
+    </view>
+
+    <view>
+      <group>
+        <cell>
+          <div class="left-tit"></div>
+          <div class="right-content"></div>
+        </cell>
+      </group>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import Counter from 'counter' // alias example
+  import List from '../components/list' // aliasFields example
+  import Group from '../components/group'
+  import Toast from 'wepy-com-toast'
+  import testMixin from '../mixins/test'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      panel: Panel,
+      counter1: Counter,
+      counter2: Counter,
+      list: List,
+      group: Group,
+      toast: Toast
+    }
+
+    mixins = [testMixin]
+
+    data = {
+
+      userInfo: {
+        nickName: '加载中...'
+      }
+
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    methods = {
+      plus () {
+        this.mynum++
+      }
+    }
+
+    events = {
+
+    }
+
+    onLoad() {
+      let self = this
+      this.$parent.getUserInfo(function (userInfo) {
+        if (userInfo) {
+          self.userInfo = userInfo
+        }
+        self.normalTitle = '标题已被修改'
+
+        self.setTimeoutTitle = '标题三秒后会被修改'
+        setTimeout(() => {
+          self.setTimeoutTitle = '到三秒了'
+          self.$apply()
+        }, 3000)
+
+        self.$apply()
+      })
+    }
+  }
+</script>

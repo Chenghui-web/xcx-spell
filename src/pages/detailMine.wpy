@@ -1,0 +1,329 @@
+<style lang="less">
+  page{
+    background: #E9F1EC;
+    position: relative;
+  }
+  .container{
+    .header{
+      background: #ffffff;
+      .header-top{
+        display: flex;
+        flex-direction: row;
+        padding: 40rpx 36rpx;
+        .top-left{
+          display: flex;
+          flex-direction: column;
+          margin-right: 36rpx;
+          .left-img{
+            width: 150rpx;
+            height: 150rpx;
+
+          }
+          .left-name{
+            text-align: center;
+
+          }
+        }
+        
+        .top-right{
+          .msg-tit{
+            overflow:hidden;
+            text-overflow:ellipsis;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2;
+            font-size: 28rpx;
+            color: #373737;
+          }
+          .over-msg{
+            color: #999;
+            font-size: 24rpx;
+            margin-top: 20rpx;
+          }
+          .detail-price{
+            margin-top: 20rpx;
+            color: #383838;
+            font-size: 24rpx;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .priceRed{
+              color: #FF1B00;
+              font-size: 42rpx;
+            }
+            .num-right{
+              display: flex;
+              flex-direction: row;
+              .cel{
+                width: 40rpx;
+                height: 40rpx;
+                line-height: 40rpx;
+                text-align: center;
+                border: 1px solid #999;
+                color: #999;
+              }
+              .add{
+                color: #fff;
+                background: #05A93B;
+              }
+              input{
+                width: 60rpx;
+                text-align: center;
+              }
+
+            }
+          }
+
+        }
+      }
+      .header-center{
+        margin: 0 36rpx;
+        padding: 34rpx 0;
+        border-top: 1px solid #EBEBEB;
+        border-bottom: 1px solid #EBEBEB;
+        color:#373737;
+        font-size: 30rpx;
+      }
+      .header-bottom{
+        color:#373737;
+        font-size: 30rpx;
+        padding: 20rpx 36rpx;
+        display: flex;
+        flex-direction: row;
+        /*box-sizing: border-box;*/
+        /*width: 100%;*/
+        .tit{
+          flex-shrink: 0;
+        }
+        .link{
+          flex: auto;
+          flex-wrap: wrap;
+          overflow-wrap: break-word;
+          word-break:break-all;
+        }
+      }
+    }
+    .friends-con{
+      width: 100%;
+      .tit{
+        width: 140rpx;
+        padding: 20rpx;
+        height: 52rpx;
+        background-image:linear-gradient(290deg, #93E0AB  0% ,#00A737  80%);
+        border-top-right-radius: 52rpx;
+        margin: 32rpx 0 ;
+        border-bottom-right-radius: 52rpx;
+        font-size: 28rpx;
+        color: #fff;
+        line-height: 52rpx;
+        text-align: center;
+      }
+      .friend-list{
+        padding:0 18rpx;
+        display: flex;
+        flex-direction: row;
+        /*overflow: hidden;*/
+        overflow-x: auto;
+        .friend-alone{
+          margin: 0 18rpx;
+          .friend-img{
+            width: 84rpx;
+            height: 84rpx;
+          }
+          .friend-name{
+            font-size: 28rpx;
+            width: 98rpx;
+            color: #3A3A3A;
+            text-align: center;
+            overflow: hidden;
+            text-overflow:ellipsis;
+          }
+        }
+      }
+    }
+    .over-con{
+      margin-top:64rpx ;
+      color: #373737;
+      font-size: 32rpx;
+      .change{
+        color: #576B95;
+        font-size: 28rpx;
+        margin-top: 20rpx;
+        text-align: center;
+      }
+    }
+    .btn-start{
+      position: fixed;
+      bottom: 0;
+
+      /*height: 92rpx;*/
+      background: #fff;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      .bottom-left{
+        padding-left: 37rpx;
+        padding: 16rpx 0 16rpx 37rpx;
+        display: flex;
+        flex-direction: column;
+        color: #999999;
+        font-size: 24rpx;
+        flex: auto;
+        .left-top{
+          color: #46B549;
+          font-size: 32rpx;
+        }
+      }
+      .bottom-right{
+        background:#09BB07 ;
+        color: #fff;
+        font-size: 36rpx;
+        width: 35%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="header">
+      <view class="header-top">
+        <view class="top-left">
+          <image class="left-img" src="../static/logo.png"></image>
+          <text class="left-name">小七</text>
+        </view>
+        <view class="top-right">
+          <text class="msg-tit">京东维达手纸第二箱半价，拼团团购，一起享受优惠吧京东维达手纸第二箱半价，拼团团购，一起享受优惠吧
+          </text>
+          <view class="over-msg">此拼单凑齐2个单位结束</view>
+          <view class="detail-price">
+            <view class="price">
+              原价 <text class="priceRed">¥75</text>
+            </view>
+            <view class="num-right">
+              <view class="subtract cel" >-</view>
+              <input type="number" value="{{numb}}" />
+              <view class="add cel">+</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="header-center">
+        <text>第二箱半箱半价，好令居一起拼单，共享有优惠，本人有京东plus会员，优惠更多哦。</text>
+      </view>
+
+      <view class="header-bottom">
+        <view class="tit">商品链接：</view>
+        <view class="link">http://jingdongweipinhuijingdongweipinhuijingdongweipinhui.com</view>
+      </view>
+    </view>
+    <view class="friends-con">
+      <view class="tit">
+        <text>参与者</text>
+      </view>
+      <view class="friend-list">
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanmaaa</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="over-con">
+      <view class="over-msg">-- 您已参与1单，请等待拼单结束 --</view>
+      <view class="change">修改参与数量</view>
+    </view>
+
+    <view class="btn-start">
+      <view class="bottom-left">
+        <view class="left-top">拼1/2单</view>
+        <view class="left-btm">拼单后，发起人会集中购买</view>
+      </view>
+      <view class="bottom-right">
+        拼单
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Toast from 'wepy-com-toast'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      toast: Toast
+    }
+    data = {
+      numb:0,
+      userInfo: {
+        nickName: '加载中...'
+      }
+
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    // methods = {
+    //   plus () {
+    //     this.mynum++
+    //   }
+    // }
+
+    events = {
+
+    }
+
+    onLoad() {
+      // let self = this
+      // this.$parent.getUserInfo(function (userInfo) {
+      //   if (userInfo) {
+      //     self.userInfo = userInfo
+      //   }
+      //   self.normalTitle = '标题已被修改'
+      //
+      //   self.setTimeoutTitle = '标题三秒后会被修改'
+      //   setTimeout(() => {
+      //     self.setTimeoutTitle = '到三秒了'
+      //     self.$apply()
+      //   }, 3000)
+      //
+      //   self.$apply()
+      // })
+    }
+  }
+</script>

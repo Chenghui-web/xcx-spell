@@ -1,0 +1,654 @@
+<style lang="less">
+  page{
+    background: #E9F1EC;
+    position: relative;
+  }
+  .container{
+    padding-bottom: 92rpx;
+    .header{
+      background: #ffffff;
+      width: 100%;
+      .header-top{
+        display: flex;
+        flex-direction: row;
+        padding: 40rpx 36rpx;
+        .top-left{
+          display: flex;
+          flex-direction: column;
+          margin-right: 36rpx;
+          .left-img{
+            width: 150rpx;
+            height: 150rpx;
+
+          }
+          .left-name{
+            text-align: center;
+            width: 150rpx;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            display:-webkit-box;
+            display: flex;
+            justify-content: center;
+
+          }
+        }
+        
+        .top-right{
+          flex: auto;
+          .msg-tit{
+            min-height: 60rpx;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2;
+            font-size: 28rpx;
+            color: #373737;
+          }
+          .over-msg{
+            color: #999;
+            font-size: 24rpx;
+            margin-top: 20rpx;
+            min-height: 30rpx;
+          }
+          .t-r-t{
+            display: flex;
+            min-height: 120rpx;
+            flex-direction: column;
+          }
+          .detail-price{
+            margin-top: 20rpx;
+            color: #383838;
+            font-size: 24rpx;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            .price{
+              display: flex;
+              .count-num{
+                margin-left: 20rpx;
+              }
+            }
+            .priceRed{
+              color: #FF1B00;
+              font-size: 42rpx;
+            }
+            .num-right{
+              display: flex;
+              flex-direction: row;
+              .cel{
+                width: 46rpx;
+                height: 46rpx;
+                line-height: 40rpx;
+                text-align: center;
+                border: 1px solid #999;
+                color: #999;
+                padding: 0;
+              }
+              .add{
+                color: #fff;
+                background: #05A93B;
+              }
+              input{
+                width: 60rpx;
+                text-align: center;
+              }
+
+            }
+            .right-img{
+              position: absolute;
+              right: 0;
+              top: -80rpx;
+              width: 155rpx;
+              height: 130rpx;
+            }
+          }
+
+        }
+      }
+      .header-center{
+        margin: 0 36rpx;
+        padding: 34rpx 0;
+        border-top: 1px solid #EBEBEB;
+        border-bottom: 1px solid #EBEBEB;
+        color:#373737;
+        font-size: 30rpx;
+      }
+      .header-bottom{
+        color:#373737;
+        font-size: 30rpx;
+        padding: 20rpx 36rpx;
+        display: flex;
+        flex-direction: row;
+        /*box-sizing: border-box;*/
+        /*width: 100%;*/
+        .tit{
+          flex-shrink: 0;
+        }
+        .link{
+          flex: auto;
+          flex-wrap: wrap;
+          overflow-wrap: break-word;
+          word-break:break-all;
+        }
+      }
+    }
+    .friends-con{
+      width: 100%;
+      .tit{
+        margin: 32rpx 0 ;
+        .info-msg{
+          padding: 20rpx;
+          height: 52rpx;
+          background-image:linear-gradient(290deg, #93E0AB  0% ,#00A737  80%);
+          border-top-right-radius: 52rpx;
+          border-bottom-right-radius: 52rpx;
+          font-size: 28rpx;
+          color: #fff;
+          line-height: 52rpx;
+        }
+      }
+      .friend-list{
+        padding:0 18rpx;
+        display: flex;
+        flex-direction: row;
+        /*overflow: hidden;*/
+        overflow-x: auto;
+        .friend-alone{
+          margin: 0 18rpx;
+          .friend-img{
+            width: 84rpx;
+            height: 84rpx;
+          }
+          .friend-name{
+            font-size: 28rpx;
+            width: 98rpx;
+            color: #3A3A3A;
+            text-align: center;
+            overflow: hidden;
+            text-overflow:ellipsis;
+          }
+        }
+      }
+    }
+    .friends-con2{
+      margin-top: 32rpx;
+      margin-bottom: 32rpx;
+      .friend-list-con{
+        .fri-list{
+          padding: 34rpx;
+          background: #fff;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          >view{
+            flex: 1;
+            flex-shrink: 0;
+            margin-left: 10rpx;
+          }
+          .num{
+            flex: 0.6;
+            margin-left: 0rpx;
+            color: #737373;
+          }
+          .name{
+            overflow: hidden;
+            text-overflow:ellipsis;
+          }
+          .img{
+            flex: 0.8;
+            image{
+              width: 84rpx;
+              height: 84rpx;
+            }
+          }
+        }
+      }
+    }
+    .over-con{
+      margin-top:64rpx ;
+      color: #373737;
+      font-size: 32rpx;
+      .change{
+        color: #576B95;
+        font-size: 28rpx;
+        margin-top: 20rpx;
+        text-align: center;
+      }
+    }
+    .btm-btn-com{
+      margin-bottom: 32rpx;
+    }
+    .btm-btn-con{
+      display: flex;
+      flex-direction: row;
+      font-size: 36rpx;
+      .edit-btn{
+        color: #fff;
+        background: #B2B2B2;
+        margin-right: 76rpx;
+      }
+      .btm-btn-com{
+        /*width: 260rpx;*/
+      }
+      
+    }
+  }
+  .btn-start{
+    position: fixed;
+    bottom: 0;
+
+    height: 92rpx;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .bottom-left{
+      padding-left: 37rpx;
+      display: flex;
+      flex-direction: column;
+      color: #999999;
+      font-size: 24rpx;
+      justify-content: space-between;
+      flex: auto;
+      .left-top{
+        color: #46B549;
+        font-size: 32rpx;
+      }
+    }
+    .bottom-right{
+      background:#09BB07 ;
+      color: #fff;
+      font-size: 36rpx;
+      width: 35%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="header">
+      <view class="header-top">
+        <view class="top-left">
+          <image class="left-img" src="{{userInfo.avatarUrl}}"></image>
+          <text class="left-name">{{userInfo.nickName}}</text>
+        </view>
+        <view class="top-right">
+          <view class="t-r-t">
+            <text class="msg-tit">{{detailInfo.name}}</text>
+            <view class="over-msg" wx:if="{{detailInfo.restCount!=0}}">此拼单凑齐{{detailInfo.restCount}}个单位结束</view>
+          </view>
+          <view class="detail-price">
+            <view class="price">
+              <view>原价 <text class="priceRed">¥{{detailInfo.price}}</text></view>
+
+              <view class="count-num" wx:if="{{detailInfo.restCount!=0}}">数量 <text class="priceRed">{{detailInfo.restCount}}</text></view>
+            </view>
+            <view class="num-right" wx:if="{{detailInfo.pinStatus ==0}}">
+              <button class="subtract cel" @tap="cutModel">-</button>
+              <input type="number" value="{{numb}}" disabled="disabled"/>
+
+              <button class="add cel" @tap="addModel" data-ids="{{hasUserInfo}}" wx:if="{{hasUserInfo}}">+</button>
+              <button class="add cel"  data-ids="{{hasUserInfo}}" bindgetuserinfo="userAllow" open-type="getUserInfo" wx:else>+</button>
+            </view>
+            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==1}}" src="../static/success.png"></image>
+            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==2}}" src="../static/over.png"></image>
+          </view>
+        </view>
+      </view>
+
+      <view class="header-center">
+        <text>{{detailInfo.description}}</text>
+      </view>
+
+      <view class="header-bottom" wx:if="{{detailInfo.productUrl}}">
+        <view class="tit">商品链接：</view>
+        <view class="link">{{detailInfo.productUrl}}</view>
+      </view>
+    </view>
+    <view class="friends-con">
+      <view class="tit">
+        <text class="info-msg">参与者</text>
+      </view>
+      <view class="friend-list">
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanmaaa</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+        <view class="friend-alone">
+          <image class="friend-img" src="../static/logo.png"></image>
+          <view class="friend-name">Tanm</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="over-con">
+      <view class="over-msg">-- 您已参与1单，请等待拼单结束 --</view>
+      <view class="change" >修改参与数量</view>
+    </view>
+
+    <button type="primary" wx:if="{{detailInfo.pinStatus!=0 }}" @tap="sameTo">发起同样的拼单</button>
+
+    <view class="friends-con friends-con2" wx:if="{{detailInfo.isMaster}}">
+      <view class="tit">
+        <text class="info-msg">参与者<text>2</text>人，共拼单<text>3</text>个单位</text>
+      </view>
+      <view class="friend-list-con">
+        <view class="fri-list">
+          <view class="num">NO.1</view>
+          <view class="img"><image src="../static/logo.png"></image></view>
+          <view class="name">TeamTeamTeamTeam</view>
+          <view>1个单位</view>
+          <view>13655298760</view>
+        </view>
+      </view>
+    </view>
+    <!---->
+    <button type="primary" class="btm-btn-com"  wx:if="{{detailInfo.isMaster && detailInfo.pinStatus == 0 && detailInfo.restCount==0 && detailInfo.joinInfos.manCount>0}}" @tap="joinOrover" data-type="2">结束拼单活动</button>
+    <view class="btm-btn-con"  wx:if="{{detailInfo.isMaster}}">
+      <button type="default" class="btm-btn-com edit-btn"  @tap="editTo" wx:if="{{detailInfo.isMaster && detailInfo.pinStatus == 0}}">修改拼单信息</button>
+      <button type="primary" class="btm-btn-com"  wx:if="{{numb}}"  @tap="joinOrover" data-type="1">参与此单</button>
+    </view>
+
+
+  </view>
+  <view class="btn-start" wx:if="{{numb && !detailInfo.isMaster}}">
+    <view class="bottom-left">
+      <view class="left-top">拼1/2单</view>
+      <view class="left-btm">拼单后，发起人会集中购买</view>
+    </view>
+    <button class="bottom-right" wx:if="{{hasPhone}}">
+      拼单
+    </button>
+    <button class="bottom-right" wx:else  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+      拼单
+    </button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Toast from 'wepy-com-toast'
+  const app = wepy.$instance
+  const API = 'https://www.aganyun.com/pindan'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '拼单'
+    }
+    components = {
+      toast: Toast
+    }
+    data = {
+      numb: 0,
+      hasPhone: false,
+      hasUserInfo: false,
+      isUserShow: false,
+      openId: null,
+      detailInfo: {},
+      userInfo: {
+        nickName: '',
+        avatarUrl: '../static/logo.png'
+      }
+    }
+
+    computed = {
+      now () {
+        return +new Date()
+      }
+    }
+
+    // methods = {
+    //   plus () {
+    //     this.mynum++
+    //   }
+    // }
+    cutModel() {
+      if (this.numb > 0) this.numb--
+      this.$apply()
+    }
+    addModel() {
+      // console.log(this.userInfo)
+      // if(this.userInfo){
+      this.numb++
+      this.$apply()
+      // }else{
+      //
+      // }
+    }
+    sameTo() {
+      wx.navigateTo({
+        url: '/pages/start?id=' + this.detailId + '&reStart=true'
+      })
+    }
+    editTo() {
+      wx.navigateTo({
+        url: '/pages/start?id=' + this.detailId
+      })
+    }
+    // 参与此单
+    joinIn() {
+
+    }
+    userAllow() {
+      this.isUserShow = false
+      let self = this
+      wx.getSetting({
+        success(res) {
+          console.log(res)
+          if (!res.authSetting['scope.userInfo']) {
+            wx.authorize({
+              scope: 'scope.userInfo',
+              success () {
+                self.getLogin()
+              },
+              fail(res) {
+                console.log(res)
+              }
+            })
+          } else {
+            self.getLogin()
+          }
+        }
+      })
+      // this.$apply()
+    }
+    getPhoneNumber() {
+      this.isUserShow = false
+      let self = this
+      wx.getSetting({
+        success(res) {
+          console.log(res)
+          if (!res.authSetting['scope.userInfo']) {
+            wx.authorize({
+              scope: 'scope.userInfo',
+              success () {
+                self.getLogin()
+              },
+              fail(res) {
+                console.log(res)
+              }
+            })
+          } else {
+            self.getLogin()
+          }
+        }
+      })
+    }
+    events = {
+
+    }
+    getLogin() {
+      let self = this
+      let userInfo = {}
+      wx.login({
+        success (res) {
+          let code = res.code
+          self.$parent.getUserInfo(function (ress) {
+            userInfo = ress.userInfo
+            if (userInfo) {
+              self.userInfo = userInfo
+              self.hasUserInfo = true
+              app.globalData.userInfo = userInfo
+              let string = ress.encryptedData
+              let iv = ress.iv
+              wx.setStorage({
+                key: 'userInfo',
+                data: userInfo
+              })
+              // return
+              wx.request({
+                url: API + '/v1/wx/openid-info',
+                data: {
+                  code: code,
+                  encryptedData: string,
+                  iv: iv
+                },
+                method: 'POST',
+                header: {
+                  'content-type': 'application/json'
+                },
+                success: function(resss) {
+                  console.log(resss)
+                  self.openId = resss.data.data.openId
+                  wx.setStorage({
+                    key: 'openId',
+                    data: resss.data.data.openId
+                  })
+                }
+              })
+            } else {
+              console.log('none')
+            }
+            self.$apply()
+          })
+        },
+        fail(res) {
+          console.log('res', res)
+        }
+      })
+    }
+
+    onLoad(options) {
+      let self = this
+      if (options.id) {
+        this.detailId = options.id
+        self.$apply()
+      }
+      if (app.globalData && app.globalData.userInfo) {
+        console.log('hasUserInfo')
+        self.userInfo.nickName = app.globalData.userInfo.nickName || ''
+        self.userInfo.avatarUrl = app.globalData.userInfo.avatarUrl || '../static/logo.png'
+        self.hasUserInfo = true
+      } else {
+        self.$parent.getUserInfo(function (res) {
+          let userInfo = res.userInfo
+          if (userInfo) {
+            self.userInfo = userInfo
+            self.hasUserInfo = true
+            // app.globalData.userInfo = userInfo
+          }
+          self.$apply()
+        })
+      }
+      try {
+        var openId = wx.getStorageSync('openId')
+        if (openId) {
+          this.openId = openId
+        }
+      } catch (e) {
+        // Do something when catch error
+      }
+    }
+    joinOrover(e) {
+      let self = this
+      let join = e.currentTarget.dataset.type
+      let msg = '已结束该活动'
+      let params = {
+        id: self.detailId,
+        join: join
+      }
+      if (join == 1) {
+        params.count = self.numb
+        msg = '已修改'
+      }
+      wx.request({
+        url: API + '/v1/pin/info',
+        data: params,
+        method: 'PUT',
+        header: {
+          'content-type': 'application/json',
+          'openId': self.openId
+        },
+        success: function(res) {
+          console.log(res)
+          wx.showToast({
+            title: msg,
+            icon: 'none',
+            success: () => {
+              self.$apply()
+            }
+          })
+        }
+      })
+    }
+    initDetail() {
+      let self = this
+      let params = {
+        id: self.detailId
+      }
+      wx.request({
+        url: API + '/v1/pin/info',
+        data: params,
+        method: 'GET',
+        header: {
+          'content-type': 'application/json',
+          'openId': self.openId
+        },
+        success: function(res) {
+          console.log(res)
+          let detailInfo = res.data.data
+          self.pinName = detailInfo.name
+          self.description = detailInfo.description
+          self.price = detailInfo.price
+          self.productUrl = detailInfo.productUrl
+          self.btntype = detailInfo.restCount!=0 ? 1 : 0
+          self.count = detailInfo.restCount!=0 ? detailInfo.restCount : null
+          // let indexArr = self.array.indexOf(detailInfo.minUnit)
+          // self.indexArr = indexArr
+          self.detailInfo = detailInfo
+          // self.setData({index: indexArr})
+          self.$apply()
+        }
+      })
+    }
+    onShow() {
+      if (this.detailId) {
+        this.initDetail()
+      }
+    }
+  }
+</script>
