@@ -458,11 +458,11 @@
               title: '发布成功,分享给好友',
               icon: 'none',
               success: () => {
-                setTimeout(() => {
-                  self.detailId = null
-                  self.initDetail()
-                  self.$apply()
-                }, 1500)
+                // setTimeout(() => {
+                //   self.detailId = null
+                //   self.initDetail()
+                //   self.$apply()
+                // }, 1500)
               }
             })
           }
@@ -511,8 +511,8 @@
           self.description = detailInfo.description
           self.price = detailInfo.price
           self.productUrl = detailInfo.productUrl
-          self.btntype = detailInfo.restCount ? 1 : 0
-          self.count = detailInfo.restCount ? detailInfo.restCount : null
+          self.btntype = detailInfo.restCount > 0 ? 1 : 0
+          self.count = detailInfo.restCount > 0 ? detailInfo.restCount : null
           let indexArr = self.array.indexOf(detailInfo.minUnit)
           self.indexArr = indexArr
           self.detailInfo = detailInfo

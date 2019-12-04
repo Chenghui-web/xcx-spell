@@ -7,7 +7,7 @@
 		"minified": false
 	},
 	"compileType": "miniprogram",
-	"appid": "wx0b88c628555e2d98",
+	"appid": "wx748895693928713e",
 	"projectname": "group",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
@@ -82,7 +82,7 @@
 					"id": 6,
 					"name": "pages/detail",
 					"pathName": "pages/detail",
-					"query": "id=21",
+					"query": "id=28",
 					"scene": null
 				},
 				{

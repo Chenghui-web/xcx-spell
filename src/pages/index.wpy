@@ -275,6 +275,10 @@
       wx.login({
         success (res) {
           let code = res.code
+          wx.setStorage({
+            key:"code",
+            data:code
+          })
           self.$parent.getUserInfo(function (ress) {
             userInfo = ress.userInfo
             if (userInfo) {
@@ -306,6 +310,7 @@
                     key:"openId",
                     data:resss.data.data.openId
                   })
+
                 }
               })
             }else{

@@ -8,6 +8,7 @@
     .header{
       background: #ffffff;
       width: 100%;
+      margin-bottom: 32rpx;
       .header-top{
         display: flex;
         flex-direction: row;
@@ -36,7 +37,7 @@
         .top-right{
           flex: auto;
           .msg-tit{
-            min-height: 60rpx;
+            /*min-height: 60rpx;*/
             overflow:hidden;
             text-overflow:ellipsis;
             display:-webkit-box;
@@ -161,6 +162,7 @@
           .friend-img{
             width: 84rpx;
             height: 84rpx;
+            border-radius: 50%;
           }
           .friend-name{
             font-size: 28rpx;
@@ -209,6 +211,7 @@
     }
     .over-con{
       margin-top:64rpx ;
+      margin-bottom:32rpx ;
       color: #373737;
       font-size: 32rpx;
       .change{
@@ -229,6 +232,7 @@
         color: #fff;
         background: #B2B2B2;
         margin-right: 76rpx;
+
       }
       .btm-btn-com{
         /*width: 260rpx;*/
@@ -251,7 +255,7 @@
       flex-direction: column;
       color: #999999;
       font-size: 24rpx;
-      justify-content: space-between;
+      justify-content: center;
       flex: auto;
       .left-top{
         color: #46B549;
@@ -286,17 +290,17 @@
             <view class="price">
               <view>原价 <text class="priceRed">¥{{detailInfo.price}}</text></view>
 
-              <view class="count-num" wx:if="{{detailInfo.restCount!=0}}">数量 <text class="priceRed">{{detailInfo.restCount}}</text></view>
+              <view class="count-num" wx:if="{{detailInfo.restCount>0}}">数量 <text class="priceRed">{{detailInfo.restCount}}</text></view>
             </view>
-            <view class="num-right" wx:if="{{detailInfo.pinStatus ==0}}">
+            <view class="num-right" wx:if="{{detailInfo.pinStatus ==0 || isSelfEditNum}}">
               <button class="subtract cel" @tap="cutModel">-</button>
               <input type="number" value="{{numb}}" disabled="disabled"/>
 
               <button class="add cel" @tap="addModel" data-ids="{{hasUserInfo}}" wx:if="{{hasUserInfo}}">+</button>
               <button class="add cel"  data-ids="{{hasUserInfo}}" bindgetuserinfo="userAllow" open-type="getUserInfo" wx:else>+</button>
             </view>
-            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==1}}" src="../static/success.png"></image>
-            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==2}}" src="../static/over.png"></image>
+            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==1 && !isSelfEditNum}}" src="../static/success.png"></image>
+            <image class="num-right right-img"  wx:if="{{detailInfo.pinStatus ==2 && !isSelfEditNum}}" src="../static/over.png"></image>
           </view>
         </view>
       </view>
@@ -310,82 +314,64 @@
         <view class="link">{{detailInfo.productUrl}}</view>
       </view>
     </view>
-    <view class="friends-con">
+    <view class="friends-con" wx:if="{{detailInfo.joinInfos && detailInfo.joinInfos.list && detailInfo.joinInfos.list.length && !detailInfo.isMaster}}">
       <view class="tit">
         <text class="info-msg">参与者</text>
       </view>
-      <view class="friend-list">
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanmaaa</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
-        <view class="friend-alone">
-          <image class="friend-img" src="../static/logo.png"></image>
-          <view class="friend-name">Tanm</view>
-        </view>
+      <view class="friend-list" >
+        <repeat for="{{detailInfo.joinInfos.list}}" key="index" index="index" item="item">
+          <view class="friend-alone">
+            <image class="friend-img" src="{{item.headImg}}"></image>
+            <view class="friend-name">{{item.nickname}}</view>
+          </view>
+        </repeat>
       </view>
     </view>
 
-    <view class="over-con">
-      <view class="over-msg">-- 您已参与1单，请等待拼单结束 --</view>
-      <view class="change" >修改参与数量</view>
-    </view>
 
-    <button type="primary" wx:if="{{detailInfo.pinStatus!=0 }}" @tap="sameTo">发起同样的拼单</button>
 
-    <view class="friends-con friends-con2" wx:if="{{detailInfo.isMaster}}">
+    <button type="primary" wx:if="{{detailInfo.pinStatus ==2 }}" @tap="sameTo">发起同样的拼单</button>
+
+    <view class="friends-con friends-con2" wx:if="{{detailInfo.isMaster }}">
       <view class="tit">
-        <text class="info-msg">参与者<text>2</text>人，共拼单<text>3</text>个单位</text>
+        <text class="info-msg">参与者<text>{{detailInfo.joinInfos.manCount}}</text>人，共拼单<text>{{detailInfo.joinInfos.totalUnit}}</text>个单位</text>
       </view>
-      <view class="friend-list-con">
-        <view class="fri-list">
-          <view class="num">NO.1</view>
-          <view class="img"><image src="../static/logo.png"></image></view>
-          <view class="name">TeamTeamTeamTeam</view>
-          <view>1个单位</view>
-          <view>13655298760</view>
-        </view>
+      <view class="friend-list-con" wx:if="{{detailInfo.isMaster && detailInfo.joinInfos && detailInfo.joinInfos.list && detailInfo.joinInfos.list.length &&detailInfo.pinStatus!=0 }}">
+        <repeat for="{{detailInfo.joinInfos.list}}" key="index" index="index" item="item">
+          <view class="fri-list">
+            <view class="num">NO.{{index+1}}</view>
+            <view class="img"><image src="{{item.headImg}}"></image></view>
+            <view class="name">{{item.nickname}}</view>
+            <view>{{item.count}}个单位</view>
+            <view>{{item.tel||'--'}}</view>
+          </view>
+        </repeat>
       </view>
+    </view>
+
+    <view class="over-con" wx:if="{{detailInfo.selfJoinInfo && detailInfo.selfJoinInfo.nickname}}">
+      <view class="over-msg">-- 您已参与{{detailInfo.selfJoinInfo.count}}单，请等待拼单结束 --</view>
+      <view class="change" @tap="selfChangeNum">修改参与数量</view>
     </view>
     <!---->
-    <button type="primary" class="btm-btn-com"  wx:if="{{detailInfo.isMaster && detailInfo.pinStatus == 0 && detailInfo.restCount==0 && detailInfo.joinInfos.manCount>0}}" @tap="joinOrover" data-type="2">结束拼单活动</button>
+    <button type="primary" class="btm-btn-com"  wx:if="{{detailInfo.isMaster && detailInfo.pinStatus == 0 && detailInfo.joinInfos.manCount>0}}" @tap="joinOrover" data-type="2">结束拼单活动</button>
     <view class="btm-btn-con"  wx:if="{{detailInfo.isMaster}}">
       <button type="default" class="btm-btn-com edit-btn"  @tap="editTo" wx:if="{{detailInfo.isMaster && detailInfo.pinStatus == 0}}">修改拼单信息</button>
-      <button type="primary" class="btm-btn-com"  wx:if="{{numb}}"  @tap="joinOrover" data-type="1">参与此单</button>
+      <button type="primary" class="btm-btn-com"  wx:if="{{numb && !isSelfEditNum && detailInfo.pinStatus == 0}}"  @tap="joinOrover" data-type="1">参与此单</button>
     </view>
 
 
   </view>
-  <view class="btn-start" wx:if="{{numb && !detailInfo.isMaster}}">
+  <view class="btn-start" wx:if="{{numb && !detailInfo.isMaster || detailInfo.isMaster && isSelfEditNum && numb}}">
     <view class="bottom-left">
-      <view class="left-top">拼1/2单</view>
+      <view class="left-top">拼{{numb}}单</view>
       <view class="left-btm">拼单后，发起人会集中购买</view>
     </view>
-    <button class="bottom-right" wx:if="{{hasPhone}}">
-      拼单
+    <button class="bottom-right" wx:if="{{hasPhone}}"   @tap="joinOrover" data-type="1">
+      {{isSelfEditNum?'确定':'拼单'}}
     </button>
     <button class="bottom-right" wx:else  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
-      拼单
+      {{isSelfEditNum?'确定':'拼单'}}
     </button>
   </view>
 </template>
@@ -406,7 +392,10 @@
       numb: 0,
       hasPhone: false,
       hasUserInfo: false,
+      isSelfEditNum: false,
       isUserShow: false,
+      fenzi: 0,
+      fenmu: 1,
       openId: null,
       detailInfo: {},
       userInfo: {
@@ -427,17 +416,33 @@
     //   }
     // }
     cutModel() {
-      if (this.numb > 0) this.numb--
-      this.$apply()
+      if (this.fenzi != 0) {
+        let efenzi = this.fenzi - 1
+        this.fenzi = efenzi
+        if (efenzi == 0) {
+          this.numb = 0
+        } else {
+          this.numb = efenzi + '/' + this.fenmu
+        }
+        if(this.fenmu == 1){
+          this.numb = efenzi
+        }
+        this.$apply()
+      }
     }
     addModel() {
-      // console.log(this.userInfo)
-      // if(this.userInfo){
-      this.numb++
+      console.log(this.fenzi)
+      let efenzi = this.fenzi + 1
+      this.fenzi = efenzi
+      this.numb = efenzi + '/' + this.fenmu
+      if(this.fenmu == 1){
+        this.numb = efenzi
+      }
       this.$apply()
-      // }else{
-      //
-      // }
+    }
+    selfChangeNum() {
+      this.isSelfEditNum = true
+      this.$apply()
     }
     sameTo() {
       wx.navigateTo({
@@ -449,10 +454,7 @@
         url: '/pages/start?id=' + this.detailId
       })
     }
-    // 参与此单
-    joinIn() {
 
-    }
     userAllow() {
       this.isUserShow = false
       let self = this
@@ -476,27 +478,45 @@
       })
       // this.$apply()
     }
-    getPhoneNumber() {
-      this.isUserShow = false
+    getPhoneNumber(e) {
+      // this.isUserShow = false
       let self = this
-      wx.getSetting({
-        success(res) {
-          console.log(res)
-          if (!res.authSetting['scope.userInfo']) {
-            wx.authorize({
-              scope: 'scope.userInfo',
-              success () {
-                self.getLogin()
+      // console.log(e)
+      if (e.detail && e.detail.iv) {
+        let encryptedData = e.detail.encryptedData
+        let iv = e.detail.iv
+        try {
+          var code = wx.getStorageSync('code')
+          if (code) {
+            wx.request({
+              url: API + '/v1/wx/tel-info',
+              data: {
+                code: code,
+                encryptedData: encryptedData,
+                iv: iv
               },
-              fail(res) {
-                console.log(res)
+              method: 'POST',
+              header: {
+                'content-type': 'application/json',
+                'openId': self.openId
+              },
+              success: function(res) {
+                self.hasPhone = true
               }
             })
-          } else {
-            self.getLogin()
           }
+        } catch (e) {
+          // Do something when catch error
         }
-      })
+      } else {
+        wx.showToast({
+          title: '获取手机号失败',
+          icon: 'none',
+          success: () => {
+            self.$apply()
+          }
+        })
+      }
     }
     events = {
 
@@ -507,6 +527,10 @@
       wx.login({
         success (res) {
           let code = res.code
+          wx.setStorage({
+            key: 'code',
+            data: code
+          })
           self.$parent.getUserInfo(function (ress) {
             userInfo = ress.userInfo
             if (userInfo) {
@@ -538,6 +562,9 @@
                     key: 'openId',
                     data: resss.data.data.openId
                   })
+                  self.$apply()
+                  self.initDetail()
+                  self.$apply()
                 }
               })
             } else {
@@ -585,15 +612,17 @@
     }
     joinOrover(e) {
       let self = this
+      // "join" : 0,* 表示是编辑我发起的拼单信息，1:修改我参与单信息的数量（当为1时，count必填【其中count为0时，为撤销我的拼单】),2:关闭我的拼单（此字段当style为0时生效）
       let join = e.currentTarget.dataset.type
       let msg = '已结束该活动'
+
       let params = {
         id: self.detailId,
         join: join
       }
       if (join == 1) {
         params.count = self.numb
-        msg = '已修改'
+        msg = '成功'
       }
       wx.request({
         url: API + '/v1/pin/info',
@@ -609,6 +638,8 @@
             title: msg,
             icon: 'none',
             success: () => {
+              self.isSelfEditNum = false
+              self.initDetail()
               self.$apply()
             }
           })
@@ -620,14 +651,17 @@
       let params = {
         id: self.detailId
       }
+      let header = {
+        'content-type': 'application/json'
+      }
+      if (self.openId) {
+        header.openId = self.openId
+      }
       wx.request({
         url: API + '/v1/pin/info',
         data: params,
         method: 'GET',
-        header: {
-          'content-type': 'application/json',
-          'openId': self.openId
-        },
+        header: header,
         success: function(res) {
           console.log(res)
           let detailInfo = res.data.data
@@ -635,8 +669,36 @@
           self.description = detailInfo.description
           self.price = detailInfo.price
           self.productUrl = detailInfo.productUrl
-          self.btntype = detailInfo.restCount!=0 ? 1 : 0
-          self.count = detailInfo.restCount!=0 ? detailInfo.restCount : null
+          // self.count = detailInfo.restCount || 0
+          self.minUnit = detailInfo.minUnit
+          let emfenzi = 0
+          let emfenmu = 1
+          if (detailInfo.minUnit == 1) {
+            emfenzi = 1
+            emfenmu = 1
+          } else {
+            emfenzi = parseInt(detailInfo.minUnit.split('/')[0])
+            emfenmu = parseInt(detailInfo.minUnit.split('/')[1])
+          }
+          if (detailInfo.selfJoinInfo && detailInfo.selfJoinInfo.count) {
+            emfenzi = emfenzi * detailInfo.selfJoinInfo.count
+          }
+          if(detailInfo.selfJoinInfo && detailInfo.selfJoinInfo.count > 0 ){
+             self.numb = emfenzi + '/' +emfenmu
+
+          }
+          //
+          // // 如果个数已存在  则分割
+          // if (detailInfo.restCount.indexOf('/') > -1) {
+          //   emfenzi = detailInfo.restCount.split('/')[0]
+          // }
+          // // 如果个数0   则分子为0
+          // if (detailInfo.restCount == 0) {
+          //   emfenzi = 0
+          // }
+          self.fenzi = emfenzi
+          self.fenmu = emfenmu
+
           // let indexArr = self.array.indexOf(detailInfo.minUnit)
           // self.indexArr = indexArr
           self.detailInfo = detailInfo
